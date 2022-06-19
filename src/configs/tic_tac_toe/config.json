@@ -1,0 +1,26 @@
+{   
+    "env" : "dev", 
+    "code" : 100,
+    "name":"tic-tac-toe",
+    "playerCount" : "playerCount",
+    "turn" : "turn",
+    "board":"board",
+    "gameData":"gameData",
+    "char" : {
+        "x" : "X",
+        "o" : "O"
+    },
+    "msg":{
+        "tryLater" : "Something went wrong.please try later or start new session",
+        "yourTurnMsg" : "Your turn.",
+        "opponentTurnMsg" : "Opponent turn.",
+        "yourWinMsg" : "Congratulations! You won.",
+        "youLostMsg" : "Oh! You lost. Don't be sad. Play again.",
+        "drawMsg" : "Oops! It's a draw.",
+        "invalidUrl" :  "Invalid game url.Start a new session.",
+        "gameUrlCompromised" : "Hummm! It seems game url is compromised. Please start a new session and do not share game url with more than one person.",
+        "playerLeft": "It seems other player has left the game.Start a new session.",
+        "windowClose": "Please wait for a bit.we are getting things ready for you.",
+        "wait" : "Please wait for a bit.we are getting things ready for you."
+    }
+}
