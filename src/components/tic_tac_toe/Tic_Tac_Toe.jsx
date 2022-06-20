@@ -80,28 +80,28 @@ class Tic_Tac_Toe extends Component {
     const drawMsg = config.msg.drawMsg;
     const { x, o } = config.char;
     let msg = (nextTurn === 0 && this.state.you === x) || (nextTurn === 1 && this.state.you === o)
-      ? this.renderTurnMSg(yourTurnMSg) : this.renderTurnMSg(opponentTurnMsg);
+      ? this.renderWarningMSg(yourTurnMSg,config.msgKey.turn) : this.renderWarningMSg(opponentTurnMsg,config.msgKey.turn);
     
       if (isFinished) {
         if (isThereAnyWinner(board)) {
-          msg = (nextTurn === 0 && this.state.you === o) || (nextTurn === 1 && this.state.you === x) ? this.renderWinnerMsg(yourWinMsg) : this.renderDrawMSg(youLostMsg);
+          msg = (nextTurn === 0 && this.state.you === o) || (nextTurn === 1 && this.state.you === x) ? this.renderSuccessMsg(yourWinMsg,config.msgKey.win) : this.renderDangerMSg(youLostMsg,config.msgKey.lost);
         }else 
-          msg = this.renderDrawMSg(drawMsg);
+          msg = this.renderDangerMSg(drawMsg,config.msgKey.draw);
       }
     
     return msg;
   }
 
-  renderWinnerMsg(msg) {
-    return <span className="badge bg-success">{msg}</span>;
+  renderSuccessMsg(msg,key) {
+    return <span key={key} className="badge bg-success">{msg}</span>;
   }
 
-  renderTurnMSg(msg) {
-    return <span className="badge bg-warning text-dark">{msg}</span>;
+  renderWarningMSg(msg,key) {
+    return <span key={key} className="badge bg-warning text-dark">{msg}</span>;
   }
 
-  renderDrawMSg(msg) {
-    return <span className="badge bg-danger">{msg}</span>;
+  renderDangerMSg(msg,key) {
+    return <span key={key} className="badge bg-danger">{msg}</span>;
   }
 
   generateLink() {
@@ -130,7 +130,7 @@ class Tic_Tac_Toe extends Component {
     } catch (error) {
       
       const msg = error// generate user msg here
-      this.setState({ msg: this.renderDrawMSg(msg), isBoardDisabled: false });
+      this.setState({ msg: this.renderDangerMSg(msg,config.msgKey.serverError), isBoardDisabled: false });
       return null;
     }
   }
@@ -159,7 +159,7 @@ class Tic_Tac_Toe extends Component {
     const isIdValid = await this.isIdValid(id);
     if (!isIdValid) {
       const msg = config.msg.invalidUrl;
-      this.setState({ msg:this.renderDrawMSg(msg),isBoardDisabled:false });
+      this.setState({ msg:this.renderDangerMSg(msg,config.msgKey.invalidUrl),isBoardDisabled:false });
       return;
     }
     
@@ -183,7 +183,7 @@ class Tic_Tac_Toe extends Component {
     }
    
     const playerCountPath = `${config.code}/${id}/${config.playerCount}`;
-    addDataChangeEventListener(playerCountPath, this.onConnectionChange);
+    addDataChangeEventListener(playerCountPath, this.onPlayerCountChange);
     const { x, o } = config.char;
     this.setState({ you: o, opponent: x, turn: 0 });
   }
@@ -212,7 +212,7 @@ class Tic_Tac_Toe extends Component {
     }
   }
 
-  onConnectionChange = (data) => {
+  onPlayerCountChange = (data) => {
     const gamePath = `${config.code}/${this.state.gameId.id}/${config.gameData}`;
     const playerCount = data.value;
     if (!data.isDataExist) {
@@ -234,13 +234,31 @@ class Tic_Tac_Toe extends Component {
     }
   }
 
+  onChangeConnectionWithServer = (data)=> {
+    if (!data.isDataExist || !data.value) {
+      log("Not Connected to internet", data.value);
+      const msg = <span key="connectionMsg" className='badge bg-danger m-1'>{config.msg.serverDisconnection}</span>;
+      const msgs = this.state.msg ? [msg,this.state.msg] : [msg];
+      this.setState({msg:msgs});
+    } else {
+      log("Connected to internet", data.value);
+      let msgs = null;
+      if (this.state.msg) {
+        msgs = [...this.state.msg];
+        msgs = msgs.filter((m) => m.key != "connectionMsg");
+      }
+      this.setState({msg:msgs});
+    }  
+  }
+
   async componentDidMount() {
     const { match } = this.props;
+    addDataChangeEventListener(config.path.serverConnectionChecking, this.onChangeConnectionWithServer);
     if (!match) {
       const gameId = await this.generateIdToServer();
       if (gameId) {
         const playerCountPath = `${config.code}/${gameId}/${config.playerCount}`;
-        addDataChangeEventListener(playerCountPath, this.onConnectionChange);
+        addDataChangeEventListener(playerCountPath, this.onPlayerCountChange);
         window.addEventListener('beforeunload', this.keepOnPage);
       } 
       return;
@@ -267,6 +285,7 @@ class Tic_Tac_Toe extends Component {
     const gamePath = `${config.code}/${this.state.gameId.id}`;
     removeDataChangeEventListener(playerCountPath);
     removeDataChangeEventListener(boardPath);
+    removeDataChangeEventListener(config.path.serverConnectionChecking);
     updateData(gamePath, null);
     log("Cleaning up");
   }

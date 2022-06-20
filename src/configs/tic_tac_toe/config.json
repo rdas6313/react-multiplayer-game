@@ -10,6 +10,15 @@
         "x" : "X",
         "o" : "O"
     },
+    "msgKey" : {
+        "win" : "win",
+        "lost" : "lost",
+        "draw" : "draw",
+        "turn" : "turn",
+        "connectionMsg" : "connectionMsg",
+        "serverError" : "serverError",
+        "invalidUrl" : "urlError"
+    },
     "msg":{
         "tryLater" : "Something went wrong.please try later or start new session",
         "yourTurnMsg" : "Your turn.",
@@ -21,6 +30,10 @@
         "gameUrlCompromised" : "Hummm! It seems game url is compromised. Please start a new session and do not share game url with more than one person.",
         "playerLeft": "It seems other player has left the game.Start a new session.",
         "windowClose": "Please wait for a bit.we are getting things ready for you.",
-        "wait" : "Please wait for a bit.we are getting things ready for you."
+        "wait" : "Please wait for a bit.we are getting things ready for you.",
+        "serverDisconnection" : "Connection problem occured.wait for a bit."
+    },
+    "path" : {
+        "serverConnectionChecking" : ".info/connected"
     }
 }
