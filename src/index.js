@@ -16,8 +16,8 @@ root.render(
 
     <BrowserRouter>
       <Routes>
-        <Route path='/tic-tac-toe' element={ <App /> } />
-        <Route path='/tic-tac-toe/:urlParam' element={ <Ttt_Wrapper /> } />
+        <Route path='/' element={ <App /> } />
+        <Route path='/:urlParam' element={ <Ttt_Wrapper /> } />
         <Route path='*' element={<NotFound/>} />
       </Routes>
     </BrowserRouter>

@@ -109,7 +109,7 @@ class Tic_Tac_Toe extends Component {
     const { gameId } = this.state;
     if (!gameId || !gameId.userGenerated)
       return null;
-    const link = `${origin}/${config.name}/${gameId.id}`;
+    const link = `${origin}/${gameId.id}`;//change link generation later
     return link;
   }
 
