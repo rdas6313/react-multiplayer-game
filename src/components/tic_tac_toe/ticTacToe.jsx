@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import GameBoard from './gameBoard';
 import { isGameFinished, isThereAnyWinner } from '../../gamelogics/tic_tac_toe/gameAlgo';
 import MsgBox from '../common/msgBox';
-import Tic_Tac_Toe_MsgBox from './tic_tac_toe_msgBox';
+import TicTacToeMsgBox from './ticTacToeMsgBox';
 import LinkBox from '../common/linkBox';
 import config from '../../configs/tic_tac_toe/config';
 import { write,updateData, readOnce, addDataChangeEventListener, removeDataChangeEventListener, getServerTimeStamp } from '../../services/remoteService';
 import log from '../../services/logger';
 
-class Tic_Tac_Toe extends Component {
+class TicTacToe extends Component {
   
   state = {}
 
@@ -203,7 +203,7 @@ class Tic_Tac_Toe extends Component {
     const isBoardDisabled = ((this.state.you === x && turn === 0) || (this.state.you === o && turn === 1)) ? false : true;
     if (boardData) {
       Object.keys(boardData).map((key) => {
-        newBoard[key] = newBoard[key] !== boardData[key] ? boardData[key] : newBoard[key]; 
+        return newBoard[key] = newBoard[key] !== boardData[key] ? boardData[key] : newBoard[key]; //catch array here
       });
       const isFinished = (isThereAnyWinner(newBoard) || isGameFinished(newBoard));
       const msg = this.getGameMsg(isFinished, newBoard, turn);
@@ -225,10 +225,10 @@ class Tic_Tac_Toe extends Component {
       removeDataChangeEventListener(gamePath);
       const msg = config.msg.gameUrlCompromised;
       this.setState({ msg,isBoardDisabled:false,isConnected:false  });
-    } else if (playerCount == 2) {
+    } else if (playerCount === 2) {
       const msg = this.getGameMsg(this.state.isFinished, this.state.board, this.state.turn);
       log(this.state.turn, msg);
-      const { x, o } = config.char;
+      const { x } = config.char;
       const isBoardDisabled = this.state.you === x && this.state.turn === 0 ? false : true;
       this.setState({ isConnected: true,msg,isBoardDisabled });
       addDataChangeEventListener(gamePath, this.onGameDataChange);
@@ -246,7 +246,7 @@ class Tic_Tac_Toe extends Component {
       let msgs = null;
       if (this.state.msg) {
         msgs = [...this.state.msg];
-        msgs = msgs.filter((m) => m.key != "connectionMsg");
+        msgs = msgs.filter((m) => m.key !== "connectionMsg");
       }
       this.setState({msg:msgs});
     }  
@@ -299,7 +299,7 @@ class Tic_Tac_Toe extends Component {
   
   render() { 
     const gameMsg = this.state.msg;
-    const titleMsg = <span className="badge bg-primary">Tic_Tac_Toe</span>;
+    const titleMsg = <span className="badge bg-primary">TicTacToe</span>;
     return (
       <div className="container">
           <div className="row">
@@ -321,7 +321,7 @@ class Tic_Tac_Toe extends Component {
                         title : titleMsg,
                         contents: [
                           <LinkBox key="ttt_linkbox" link={this.generateLink()} />,
-                          <Tic_Tac_Toe_MsgBox key="ttt_msgbox2" msg={gameMsg} />
+                          <TicTacToeMsgBox key="ttt_msgbox2" msg={gameMsg} />
 
                         ]    
                       }
@@ -335,4 +335,4 @@ class Tic_Tac_Toe extends Component {
   }
 }
  
-export default Tic_Tac_Toe;
+export default TicTacToe;

@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route,Routes } from "react-router-dom";
 import {init} from './services/remoteService'
 import NotFound from './components/common/notFound';
-import Ttt_Wrapper from './components/tic_tac_toe/ttt_wrapper';
+import TicTacToeWrapper from './components/tic_tac_toe/ticTacToeWrapper';
 
 init();
 
@@ -17,7 +17,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={ <App /> } />
-        <Route path='/:urlParam' element={ <Ttt_Wrapper /> } />
+        <Route path='/:urlParam' element={ <TicTacToeWrapper /> } />
         <Route path='*' element={<NotFound/>} />
       </Routes>
     </BrowserRouter>

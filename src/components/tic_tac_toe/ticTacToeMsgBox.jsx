@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-class Tic_Tac_Toe_MsgBox extends Component {
+class TicTacToeMsgBox extends Component {
     
     render() { 
         const { msg } = this.props;
@@ -11,4 +11,4 @@ class Tic_Tac_Toe_MsgBox extends Component {
     }
 }
  
-export default Tic_Tac_Toe_MsgBox;
+export default TicTacToeMsgBox;

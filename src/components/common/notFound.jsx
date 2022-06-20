@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 const NotFound = () => {
     return ( 
         <div className='container m-5 p-4 '>
