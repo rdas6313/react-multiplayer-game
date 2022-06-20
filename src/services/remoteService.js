@@ -5,15 +5,16 @@ import { getDatabase, push, set,ref,child, get,update, onValue, off, serverTimes
 import log from "./logger";
 
 function init() {
+
   const firebaseConfig = {
-    apiKey: "AIzaSyBQoXKzKIqTDJ8Ny4jm_0K0lqHAzbVXAmg",
-    authDomain: "react-multiplayer-app.firebaseapp.com",
-    databaseURL: "https://react-multiplayer-app-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "react-multiplayer-app",
-    storageBucket: "react-multiplayer-app.appspot.com",
-    messagingSenderId: "922896963519",
-    appId: "1:922896963519:web:9525677af42a5c46cd730a",
-    measurementId: "G-Y3K6CSB1W9"
+    apiKey: process.env.REACT_APP_APIKEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASEURL,
+    projectId: process.env.REACT_APP_PROJECTID,
+    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_APPID,
+    measurementId: process.env.REACT_APP_MEASUREMENTID
   };
   
   // Initialize Firebase
