@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, push, set,ref,child, get,update, onValue, off} from "firebase/database";
+import { getDatabase, push, set,ref,child, get,update, onValue, off, serverTimestamp} from "firebase/database";
 import log from "./logger";
 
 function init() {
@@ -83,7 +83,12 @@ function removeDataChangeEventListener(path) {
   off(pathRef);
 }
 
+function getServerTimeStamp() {
+  return serverTimestamp();
+}
+
 export {
+  getServerTimeStamp,
   init,
   write,
   updateData,

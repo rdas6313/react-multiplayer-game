@@ -6,6 +6,7 @@
     "turn" : "turn",
     "board":"board",
     "gameData":"gameData",
+    "timestamp" : "timestamp",
     "char" : {
         "x" : "X",
         "o" : "O"

@@ -5,7 +5,7 @@ import MsgBox from '../common/msgBox';
 import Tic_Tac_Toe_MsgBox from './tic_tac_toe_msgBox';
 import LinkBox from '../common/linkBox';
 import config from '../../configs/tic_tac_toe/config';
-import { write,updateData, readOnce, addDataChangeEventListener, removeDataChangeEventListener } from '../../services/remoteService';
+import { write,updateData, readOnce, addDataChangeEventListener, removeDataChangeEventListener, getServerTimeStamp } from '../../services/remoteService';
 import log from '../../services/logger';
 
 class Tic_Tac_Toe extends Component {
@@ -119,6 +119,7 @@ class Tic_Tac_Toe extends Component {
     const gameData = {};
     gameData[config.turn] = 0;
     gameData[config.board] = null;
+    data[config.timestamp] = getServerTimeStamp();
     data[config.playerCount] = 1;
     data[config.gameData] = gameData;
     
