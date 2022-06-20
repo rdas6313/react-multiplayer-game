@@ -1,5 +1,5 @@
 {   
-    "env" : "dev", 
+    "env" : "development", 
     "code" : 100,
     "name":"tic-tac-toe",
     "playerCount" : "playerCount",
